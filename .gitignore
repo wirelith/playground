@@ -1,0 +1,9 @@
+node_modules/
+_site/
+coverage/
+test-results/
+*.tsbuildinfo
+.DS_Store
+.vscode/
+.idea/
+*.log

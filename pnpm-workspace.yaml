@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+
+# Do not install any package version published less than 14 days ago.
+minimumReleaseAge: 20160
+
+# Exact versions only.
+savePrefix: ""
+
+# No dependency may run install scripts: none is allowed to build, and any that asks fails the install.
+strictDepBuilds: true

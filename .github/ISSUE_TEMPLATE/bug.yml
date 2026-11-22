@@ -1,0 +1,48 @@
+# SPDX-License-Identifier: MIT
+
+name: Bug report
+description: The playground shows, saves or shares something wrongly, or doesn't work in your browser.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Everything you write here is public, forever. Use made-up products and people in any source you share.
+
+        If core itself parses, validates or renders a source wrongly, the same thing happens outside the playground: please report it in the main repository instead, https://github.com/wirelith/wirelith/issues.
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you did
+      description: The steps, and the smallest Wirelith source that shows the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Include any message the page showed.
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+  - type: input
+    id: version
+    attributes:
+      label: Playground footer
+      description: The core version and commit shown at the bottom of the page.
+  - type: checkboxes
+    id: public
+    attributes:
+      label: Before you submit
+      options:
+        - label: This contains no private or internal information, and uses made-up products and people only.
+          required: true
