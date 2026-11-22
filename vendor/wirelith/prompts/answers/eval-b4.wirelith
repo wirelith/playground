@@ -1,0 +1,26 @@
+wirelith 0.1
+
+screen "Choose a service" tablet #service
+  h1 "Pebblebrook Dental"
+  radio "Service" [Check-up, Cleaning, Filling] value="Cleaning"
+  button "Next" primary -> #time
+
+screen "Pick a date and time" tablet #time
+  h1 "Pick a date and time"
+  input "Date" type=date
+  select "Time" ["9:00", "10:30", "14:00"] value="10:30"
+  row justify=between
+    button "Back" -> #service
+    button "Next" primary -> #details
+
+screen "Your details" tablet #details
+  h1 "Your details"
+  input "Name"
+  input "Phone"
+  input "Email" type=email
+  row justify=between
+    button "Back" -> #time
+    button "Confirm booking" primary -> #confirm
+  modal "Booking confirmed" #confirm
+    text "We'll see you soon."
+    button "Done" primary -> #service

@@ -1,0 +1,12 @@
+wirelith 0.1
+
+screen "Add contact" phone #add
+  header
+    button icon=arrow-left
+    h3 "Add contact"
+  input "First name"
+  input "Last name"
+  input "Phone number"
+  input "Email" type=email
+  toggle "Favourite"
+  button "Save" primary

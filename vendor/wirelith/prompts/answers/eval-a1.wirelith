@@ -1,0 +1,9 @@
+wirelith 0.1
+
+screen "Create account" phone #signup
+  h1 "Create your account"
+  input "Name"
+  input "Email" type=email placeholder="you@example.com"
+  input "Password" type=password
+  checkbox "I accept the terms"
+  button "Sign up" primary

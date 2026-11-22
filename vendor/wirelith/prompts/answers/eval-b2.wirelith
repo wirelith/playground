@@ -1,0 +1,20 @@
+wirelith 0.1
+
+screen "Pricing" desktop #pricing
+  h1 "Pricing" align=center
+  row justify=center
+    toggle "Billed yearly" on
+  grid cols=3
+    card "Free"
+      h2 "$0"
+      list [One project, Basic support]
+      button "Start for free"
+    card "Team"
+      badge "Most popular" primary
+      h2 "$12"
+      list [Unlimited projects, Shared spaces, Priority support]
+      button "Choose Team" primary
+    card "Business"
+      h2 "$29"
+      list [Everything in Team, Single sign-on, Audit log]
+      button "Contact sales"
