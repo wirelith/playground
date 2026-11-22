@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-// Wires the page together: editor, render client, problems, preview, examples and footer.
+// Wires the page together: editor, render client, problems, preview, examples, render options,
+// download, share links and footer.
 
 import { askInline } from './confirm.js';
 import { disclosure } from './disclosure.js';
@@ -8,6 +9,8 @@ import { Editor } from './editor.js';
 import { REJECTED, showSvg } from './preview.js';
 import { renderProblems } from './problems.js';
 import { RenderClient } from './render-client.js';
+import { ScreenMenu } from './screen-menu.js';
+import { decodeShare, encodeShare, ShareError } from './share.js';
 import { BUILD, EXAMPLES } from './site-data.js';
 import { workerScriptURL } from './trusted-types.js';
 
@@ -15,6 +18,9 @@ import { workerScriptURL } from './trusted-types.js';
 /** @typedef {import('./render-job.js').RenderResult} RenderResult */
 
 export const TIMED_OUT = 'Rendering took too long and was stopped.';
+export const SHARED = 'Link copied. Anyone with the link can read the source.';
+export const SHARED_NOT_COPIED =
+  'The link is in the address bar; copy it from there. Anyone with the link can read the source.';
 
 /**
  * @template {HTMLElement} T
@@ -35,13 +41,33 @@ const problemCount = byId('problem-count');
 const examplesButton = /** @type {HTMLButtonElement} */ (byId('examples-button'));
 const examplesList = byId('examples-list');
 const confirmBox = byId('confirm');
+const notice = byId('notice');
+const notesBox = /** @type {HTMLInputElement} */ (byId('opt-notes'));
+const flowsBox = /** @type {HTMLInputElement} */ (byId('opt-flows'));
+const downloadButton = /** @type {HTMLButtonElement} */ (byId('download'));
+const shareButton = /** @type {HTMLButtonElement} */ (byId('share'));
 
 /** The text as it was last loaded; the editor holds edited text when it differs. */
 let loaded = '';
+/** core's SVG for the current source and options, exactly, for Download SVG. */
+let lastSvg = /** @type {string | null} */ (null);
+
+const screens = new ScreenMenu(
+  /** @type {HTMLButtonElement} */ (byId('screen-button')),
+  byId('screen-list'),
+  () => rerender(),
+);
 
 /** @returns {RenderOptions} */
 function options() {
-  return {};
+  /** @type {RenderOptions} */
+  const o = { notes: notesBox.checked, flows: flowsBox.checked };
+  if (screens.value) o.screen = screens.value;
+  return o;
+}
+
+function rerender() {
+  client.now(editor.value, options());
 }
 
 const client = new RenderClient({
@@ -65,8 +91,22 @@ function say(message, kind) {
   status.dataset.kind = kind;
 }
 
+/**
+ * @param {string} message
+ * @param {'info' | 'error'} kind
+ */
+function tell(message, kind) {
+  notice.textContent = message;
+  notice.dataset.kind = kind;
+  notice.hidden = message === '';
+}
+
 /** @param {RenderResult} r */
 function show(r) {
+  if (r.outline) screens.update(r.outline);
+  if (r.screenReset) screens.set('');
+  lastSvg = r.svg;
+  downloadButton.disabled = r.svg === null;
   editor.setMarks(r.diagnostics);
   renderProblems(problems, problemCount, r.diagnostics, (d) => editor.selectPosition(d.line, d.column));
   if (r.error) {
@@ -98,6 +138,73 @@ export async function load(source, what) {
   return true;
 }
 
+notesBox.addEventListener('change', rerender);
+flowsBox.addEventListener('change', rerender);
+
+// Download SVG: core's string, exactly, with the source embedded (core's default).
+downloadButton.addEventListener('click', () => {
+  if (lastSvg === null) return;
+  const url = URL.createObjectURL(new Blob([lastSvg], { type: 'image/svg+xml' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'wireframe.svg';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+});
+
+// Share: write the fragment without adding a history entry, then copy the link. Typing never
+// changes the URL.
+shareButton.addEventListener('click', async () => {
+  const fragment = await encodeShare({
+    source: editor.value,
+    notes: notesBox.checked,
+    flows: flowsBox.checked,
+    screen: screens.value,
+  });
+  history.replaceState(null, '', `#${fragment}`);
+  try {
+    await navigator.clipboard.writeText(location.href);
+    tell(SHARED, 'info');
+  } catch {
+    tell(SHARED_NOT_COPIED, 'info');
+  }
+});
+
+/**
+ * Opens the share link in the URL, if there is one. Returns false when there is none or it
+ * could not be opened.
+ * @param {boolean} ask whether to ask before replacing edited text
+ */
+async function openFragment(ask) {
+  let shared;
+  try {
+    shared = await decodeShare(location.hash);
+  } catch (e) {
+    tell(e instanceof ShareError ? e.message : 'This link could not be opened.', 'error');
+    return false;
+  }
+  if (!shared) return false;
+  if (ask && editor.value !== loaded && editor.value !== shared.source) {
+    const replace = await askInline(
+      confirmBox,
+      'Replace your source with the one in this link?',
+      'Replace',
+      'Keep mine',
+    );
+    if (!replace) return true;
+  }
+  notesBox.checked = shared.notes;
+  flowsBox.checked = shared.flows;
+  screens.set(shared.screen);
+  tell('', 'info');
+  loaded = shared.source;
+  editor.setValue(shared.source);
+  client.now(shared.source, options());
+  return true;
+}
+
+window.addEventListener('hashchange', () => openFragment(true));
+
 const examplesMenu = disclosure(examplesButton, examplesList);
 for (const ex of EXAMPLES) {
   const item = document.createElement('li');
@@ -120,5 +227,12 @@ byId('spec-version').textContent = BUILD.specVersion;
 commitLink.textContent = BUILD.upstreamCommit.slice(0, 7);
 commitLink.href = `${BUILD.repository}/commit/${BUILD.upstreamCommit}`;
 
-const first = EXAMPLES.find((e) => e.id === 'readme-example') ?? EXAMPLES[0];
-if (first) await load(first.source, first.title);
+// Every font face now, so that nothing is fetched later when a drawing first uses one.
+await Promise.allSettled([...document.fonts].map((f) => f.load()));
+
+// A share link in the URL, or else the README example.
+if (!(await openFragment(false))) {
+  const first = EXAMPLES.find((e) => e.id === 'readme-example') ?? EXAMPLES[0];
+  if (first) await load(first.source, first.title);
+}
+document.documentElement.dataset.ready = 'true';

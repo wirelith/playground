@@ -18,7 +18,21 @@
     <button type="button" id="examples-button" aria-controls="examples-list">Examples</button>
     <ul id="examples-list" class="menu-list" aria-label="Examples" hidden></ul>
   </div>
+  <fieldset class="options">
+    <legend class="visually-hidden">Render options</legend>
+    <label class="check"><input type="checkbox" id="opt-notes" checked> Notes</label>
+    <label class="check"><input type="checkbox" id="opt-flows" checked> Flows</label>
+    <div class="menu">
+      <button type="button" id="screen-button" aria-controls="screen-list">Screen: All screens</button>
+      <fieldset id="screen-list" class="menu-list" hidden></fieldset>
+    </div>
+  </fieldset>
+  <div class="actions">
+    <button type="button" id="download" disabled>Download SVG</button>
+    <button type="button" id="share">Share link</button>
+  </div>
 </header>
+<p id="notice" class="notice" role="status" hidden></p>
 <div id="confirm" class="confirm" hidden></div>
 <main class="split">
   <section class="pane editor-pane" aria-labelledby="editor-heading">
