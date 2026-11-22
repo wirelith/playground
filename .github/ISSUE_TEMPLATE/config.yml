@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security problem
+    url: https://github.com/wirelith/playground/security/advisories/new
+    about: Report privately. Please don't open a public issue.
+  - name: The language, core, or the conformance suite
+    url: https://github.com/wirelith/wirelith/issues
+    about: Problems and ideas for Wirelith itself go to the main repository.
