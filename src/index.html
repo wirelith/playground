@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'; trusted-types playground">
+<meta name="referrer" content="no-referrer">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wirelith Playground</title>
+<link rel="icon" href="src/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="src/fonts.css">
+<link rel="stylesheet" href="src/styles.css">
+<script type="module" src="src/app.js"></script>
+</head>
+<body>
+<header class="toolbar">
+  <h1>Wirelith Playground</h1>
+  <div class="menu">
+    <button type="button" id="examples-button" aria-controls="examples-list">Examples</button>
+    <ul id="examples-list" class="menu-list" aria-label="Examples" hidden></ul>
+  </div>
+</header>
+<div id="confirm" class="confirm" hidden></div>
+<main class="split">
+  <section class="pane editor-pane" aria-labelledby="editor-heading">
+    <h2 id="editor-heading">Source</h2>
+    <p id="editor-help" class="help">Tab inserts two spaces. To move focus out of the editor, press Escape, then Tab.</p>
+    <div class="editor">
+      <div id="gutter" class="gutter"></div>
+      <textarea id="source" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="editor-help" aria-labelledby="editor-heading"></textarea>
+    </div>
+    <h2 id="problems-heading">Problems <span id="problem-count" class="count"></span></h2>
+    <ol id="problems" class="problems" aria-labelledby="problems-heading"></ol>
+  </section>
+  <section class="pane preview-pane" aria-labelledby="preview-heading">
+    <h2 id="preview-heading">Preview</h2>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <div id="preview" class="preview"></div>
+  </section>
+</main>
+<footer class="footer">
+  <p>
+    Rendered by @wirelith/core <span id="core-version"></span>,
+    built from <a id="upstream-commit" href="https://github.com/wirelith/wirelith" rel="noreferrer">the main repository</a>,
+    for Wirelith <span id="spec-version"></span>.
+    <a href="https://github.com/wirelith/wirelith" rel="noreferrer">The Wirelith repository</a> ·
+    <a href="LICENSE.txt">License</a> ·
+    <a href="NOTICE.txt">Notice</a>
+  </p>
+  <p>Everything runs in this page. Nothing you write is sent anywhere.</p>
+</footer>
+</body>
+</html>
