@@ -42,6 +42,16 @@ CI checks that every one of those files matches the lock, and fetches the commit
    pnpm lint && pnpm typecheck && pnpm test
    ```
 
+## Deploying
+
+The site is hosted on GitHub Pages and deployed by `.github/workflows/deploy.yml`.
+
+- **A merge deploys.** Every push to `main` builds the site from that commit, checks it with `scripts/check-site.mjs`, and deploys it. Deploys run one at a time, and a deploy that has started always finishes.
+- **Then it is checked.** `scripts/smoke.mjs` fetches the live `build.json`, checks that it names the deployed commit, and checks that every file it lists is served with the bytes that were built. Run it yourself with `node scripts/smoke.mjs <site URL> [<commit>]`.
+- **To roll back,** run the Deploy workflow by hand (Actions, Deploy, Run workflow) with `ref` set to an earlier commit on `main`, such as the commit the previous `build.json` named. The workflow refuses a commit that isn't on `main`. Then revert the bad change in a pull request, so `main` and the live site agree again.
+
+The repository needs these settings first: Pages, Source "GitHub Actions"; and the `github-pages` environment limited to the `main` branch.
+
 ## License
 
 MIT. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
