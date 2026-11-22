@@ -1,0 +1,21 @@
+wirelith 0.1
+
+screen "Get started" desktop #start
+  header
+    h3 "Fernway"
+    spacer
+    avatar "Sam Lee" sm
+  column pad=lg gap=md width=640
+    h1 "Welcome to Fernway"
+    text "Five quick steps to set up your first project." muted
+    label "2 of 5 steps done"
+    list #steps
+      item "Create a project" icon=check
+      item "Invite a teammate" icon=check
+      item "Add a task"
+      item "Set a due date"
+      item "Connect a calendar"
+    row justify=end gap=md
+      link "Skip for now"
+      button "Continue" primary
+  note "Ticked steps show a check; the rest are still to do" for=#steps

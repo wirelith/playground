@@ -13,3 +13,13 @@ export declare const BUILD: {
 };
 
 export declare const EXAMPLES: { id: string; title: string; source: string }[];
+
+export declare const PROMPTS: {
+  id: string;
+  /** "eval" for the main repository's eval tasks, "playground" for this repository's own. */
+  kind: 'eval' | 'playground';
+  title: string;
+  request: string;
+  /** An example answer, when the prompt has one. */
+  answer?: string;
+}[];

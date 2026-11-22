@@ -3,6 +3,7 @@
 // Wires the page together: editor, render client, problems, preview, examples, render options,
 // download, share links and footer.
 
+import { setUpAiPanel } from './ai-panel.js';
 import { askInline } from './confirm.js';
 import { disclosure } from './disclosure.js';
 import { Editor } from './editor.js';
@@ -51,6 +52,9 @@ const shareButton = /** @type {HTMLButtonElement} */ (byId('share'));
 let loaded = '';
 /** core's SVG for the current source and options, exactly, for Download SVG. */
 let lastSvg = /** @type {string | null} */ (null);
+/** The diagnostics for the source as it was last rendered. */
+let lastDiagnostics = /** @type {import('./render-job.js').Diagnostic[]} */ ([]);
+let lastSource = '';
 
 const screens = new ScreenMenu(
   /** @type {HTMLButtonElement} */ (byId('screen-button')),
@@ -75,6 +79,7 @@ const client = new RenderClient({
     /** @type {any} */ (new Worker(/** @type {any} */ (workerScriptURL()), { type: 'module' })),
   onResult: show,
   onTimeout: () => {
+    document.documentElement.dataset.ready = 'true';
     preview.replaceChildren();
     say(TIMED_OUT, 'error');
   },
@@ -103,10 +108,15 @@ function tell(message, kind) {
 
 /** @param {RenderResult} r */
 function show(r) {
+  // The page has loaded everything it ever will once the first answer arrives.
+  document.documentElement.dataset.ready = 'true';
   if (r.outline) screens.update(r.outline);
   if (r.screenReset) screens.set('');
   lastSvg = r.svg;
+  lastDiagnostics = r.diagnostics;
+  lastSource = editor.value;
   downloadButton.disabled = r.svg === null;
+  ai.setProblemsEnabled(r.diagnostics.length > 0);
   editor.setMarks(r.diagnostics);
   renderProblems(problems, problemCount, r.diagnostics, (d) => editor.selectPosition(d.line, d.column));
   if (r.error) {
@@ -137,6 +147,16 @@ export async function load(source, what) {
   client.now(source, options());
   return true;
 }
+
+const ai = setUpAiPanel({
+  toggle: /** @type {HTMLButtonElement} */ (byId('ai-button')),
+  panel: byId('ai-panel'),
+  textarea,
+  blocks: byId('blocks'),
+  load,
+  current: () => ({ source: lastSource, diagnostics: lastDiagnostics }),
+  tell,
+});
 
 notesBox.addEventListener('change', rerender);
 flowsBox.addEventListener('change', rerender);
@@ -235,4 +255,3 @@ if (!(await openFragment(false))) {
   const first = EXAMPLES.find((e) => e.id === 'readme-example') ?? EXAMPLES[0];
   if (first) await load(first.source, first.title);
 }
-document.documentElement.dataset.ready = 'true';

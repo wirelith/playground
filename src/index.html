@@ -30,9 +30,29 @@
   <div class="actions">
     <button type="button" id="download" disabled>Download SVG</button>
     <button type="button" id="share">Share link</button>
+    <button type="button" id="ai-button" aria-controls="ai-panel">Ask your AI</button>
   </div>
 </header>
+<section id="ai-panel" class="ai-panel" aria-labelledby="ai-heading" hidden>
+  <h2 id="ai-heading">Ask your AI</h2>
+  <p class="help">Write Wirelith with your AI assistant by copy and paste. This page never sends anything to it.</p>
+  <ol class="ai-steps">
+    <li>
+      <button type="button" id="copy-preamble">Copy the preamble</button>
+      Paste it into your AI assistant, then describe the wireframe you want. Or copy a ready-made prompt below.
+    </li>
+    <li>Paste your AI assistant’s reply into the editor. The page keeps only its wirelith code block.</li>
+    <li>
+      <button type="button" id="copy-problems" disabled>Copy problems for your AI</button>
+      If the source has problems, paste them back to your AI assistant to fix.
+    </li>
+  </ol>
+  <textarea id="copy-fallback" class="copy-fallback" readonly hidden aria-label="Text to copy"></textarea>
+  <h3>Prompts</h3>
+  <ul id="prompt-list" class="prompt-list"></ul>
+</section>
 <p id="notice" class="notice" role="status" hidden></p>
+<div id="blocks" class="blocks" hidden></div>
 <div id="confirm" class="confirm" hidden></div>
 <main class="split">
   <section class="pane editor-pane" aria-labelledby="editor-heading">

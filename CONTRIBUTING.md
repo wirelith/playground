@@ -86,6 +86,14 @@ pnpm hygiene                 # the copyright-holder check, and the denylist if y
 
 Every source file starts with a `SPDX-License-Identifier: MIT` comment, and no other license header.
 
+## Adding a prompt
+
+The "Ask your AI" panel offers ready-made prompts: some of the main repository's eval tasks (which ones is a list in `src/config.js`), then this repository's own, in `prompts/`.
+
+- `prompts/<id>.md` is one prompt: a title line, then the request. The id is lowercase words joined by `-`.
+- `prompts/<id>.wirelith` is its example answer, if it has one. CI fails if an example answer has an error.
+- Use made-up products and people only. Reuse the invented names in the specification, such as Fernway, Larkboard or Vellumcrest. Name no AI product: the page says "your AI assistant".
+
 ## Files from the main repository
 
 Some files here come byte for byte from [wirelith/wirelith](https://github.com/wirelith/wirelith): the built `@wirelith/core`, the examples and prompts under `vendor/wirelith/`, the fonts and icon license under `third-party/`, `scripts/hygiene/`, `scripts/check-spdx.mjs`, `scripts/check-licenses.mjs`, `scripts/install-hooks.mjs`, `.githooks/`, `.github/workflows/pr-checks.yml`, `.github/workflows/scan-posts.yml`, `biome.json`, `CODE_OF_CONDUCT.md` and `LICENSE`. `scripts/upstream.lock.json` lists every one with its SHA-256.
