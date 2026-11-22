@@ -1,0 +1,48 @@
+wirelith 0.1
+theme ink
+
+screen "Larkboard: Board" desktop #board
+  header
+    h3 "Larkboard"
+    input placeholder="Search tasks" type=search width=240
+    spacer
+    button "Filter" icon=filter
+    button "New task" primary #new-button -> #new-task
+  grid cols=3
+    column
+      h3 "To do"
+      card "Draft launch email" #first-card -> #details
+        badge "High" danger
+        avatar "Ada Park" sm
+      card "Book the venue"
+        badge "Medium"
+        avatar "Luis Ortega" sm
+    column
+      h3 "In progress"
+      card "Pricing page copy"
+        badge "High" danger
+        avatar "Mei Tanaka" sm
+      card "Onboarding checklist"
+        badge "Low"
+        avatar "Omar Haddad" sm
+    column
+      h3 "Done"
+      card "Pick a launch date"
+        badge "Medium"
+        avatar "Ada Park" sm
+  modal "New task" #new-task
+    input "Title"
+    textarea "Description"
+    select "Assignee" [Ada Park, Luis Ortega, Mei Tanaka, Omar Haddad]
+    radio "Priority" [Low, Medium, High] value="Medium"
+    row justify=end
+      button "Cancel"
+      button "Create task" primary
+  drawer "Draft launch email" #details
+    text "Write the email that announces the launch to existing customers."
+    label "Assignee"
+    avatar "Ada Park"
+    textarea "Comment" placeholder="Write a comment"
+    button "Post comment" primary
+  note "Opens the dialog for a new task" for=#new-button
+  note "Clicking a card opens its details" for=#first-card

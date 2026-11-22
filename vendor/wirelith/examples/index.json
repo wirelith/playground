@@ -1,0 +1,52 @@
+[
+  {
+    "id": "readme-example",
+    "title": "The README example",
+    "file": "readme-example.wirelith"
+  },
+  {
+    "id": "example-2-first",
+    "title": "A first example",
+    "file": "example-2-first.wirelith"
+  },
+  {
+    "id": "example-18-1-analytics-dashboard",
+    "title": "Analytics dashboard",
+    "file": "example-18-1-analytics-dashboard.wirelith"
+  },
+  {
+    "id": "example-18-2-sign-in-flow",
+    "title": "Sign-in flow",
+    "file": "example-18-2-sign-in-flow.wirelith"
+  },
+  {
+    "id": "example-18-3-settings-page",
+    "title": "Settings page",
+    "file": "example-18-3-settings-page.wirelith"
+  },
+  {
+    "id": "example-18-4-data-table-with-filters",
+    "title": "Data table with filters",
+    "file": "example-18-4-data-table-with-filters.wirelith"
+  },
+  {
+    "id": "example-18-5-e-commerce-product-page",
+    "title": "E-commerce product page",
+    "file": "example-18-5-e-commerce-product-page.wirelith"
+  },
+  {
+    "id": "example-18-6-mobile-navigation-pattern",
+    "title": "Mobile navigation pattern",
+    "file": "example-18-6-mobile-navigation-pattern.wirelith"
+  },
+  {
+    "id": "example-18-7-document-editor",
+    "title": "Document editor",
+    "file": "example-18-7-document-editor.wirelith"
+  },
+  {
+    "id": "example-ai-spec",
+    "title": "The one-page AI spec's example",
+    "file": "example-ai-spec.wirelith"
+  }
+]

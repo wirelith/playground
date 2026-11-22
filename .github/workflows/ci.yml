@@ -86,7 +86,8 @@ jobs:
           node-version: 22
       - run: node scripts/hygiene/check-holder.mjs --tree
 
-  # Every vendored file matches the lock, and fetching the pinned commit again gives the same bytes.
+  # Every vendored file matches the lock, and fetching and building the pinned commit again, with
+  # the main repository's own lockfile and build script, gives the same bytes.
   upstream:
     runs-on: ubuntu-latest
     steps:
@@ -96,5 +97,6 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      - run: npm install --global pnpm@${{ env.PNPM_VERSION }}
       - run: node scripts/check-upstream.mjs
       - run: node scripts/check-upstream.mjs --rebuild

@@ -1,0 +1,21 @@
+wirelith 0.1
+
+screen "Users" desktop #users
+  header
+    h2 "Users"
+    spacer
+    button "Invite user" primary icon=plus
+  row
+    input placeholder="Search users" type=search grow
+    select [Any role, Admin, Member] value="Any role"
+    select [Any status, Active, Invited, Suspended] value="Any status"
+  table [Name, Email, Role, Status, Last seen]
+    row [Ada Park, ada@example.com, Admin, Active, Today]
+    row [Luis Ortega, luis@example.com, Member, Invited, Never]
+    row [Mei Tanaka, mei@example.com, Member, Active, Yesterday]
+
+screen "Users" #users-empty of=#users state="No matches"
+  header
+    h2 "Users"
+  empty "No users match these filters"
+    button "Clear filters"

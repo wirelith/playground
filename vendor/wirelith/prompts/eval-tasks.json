@@ -1,0 +1,72 @@
+[
+  {
+    "id": "eval-a1",
+    "set": "A",
+    "number": 1,
+    "title": "Phone sign-up screen",
+    "request": "A phone sign-up screen: name, email, password, a checkbox to accept the terms, and a button."
+  },
+  {
+    "id": "eval-a2",
+    "set": "A",
+    "number": 2,
+    "title": "Account settings, Profile tab",
+    "request": "A desktop account settings page with tabs (Profile, Security, Notifications). Show the Profile tab: an avatar, fields for name, email and a short bio, a time zone dropdown, and Save and Cancel buttons aligned to the right."
+  },
+  {
+    "id": "eval-a3",
+    "set": "A",
+    "number": 3,
+    "title": "Email inbox",
+    "request": "A desktop email inbox: a left sidebar with folders (one of them selected, one with an unread count), a top bar with a search field and a Compose button, a table of messages with sender, subject and date, and Previous / Next buttons under it."
+  },
+  {
+    "id": "eval-a4",
+    "set": "A",
+    "number": 4,
+    "title": "Checkout flow",
+    "request": "A phone checkout flow of three screens: Cart, Shipping address, Order confirmed. Buttons move between the screens. Also show the Shipping address screen in an error state where the postcode is invalid."
+  },
+  {
+    "id": "eval-a5",
+    "set": "A",
+    "number": 5,
+    "title": "Task board",
+    "request": "A desktop task board for a made-up product. A header with the product name, a search field, a filter button with an icon and a \"New task\" button. Three columns (To do, In progress, Done), each holding two or three task cards with a title, a priority badge and the assignee's avatar. \"New task\" opens a dialog with a title field, a description field, an assignee dropdown and a priority choice. Clicking the first card opens a side panel with the task's details and a comment box. Add two notes explaining two of the elements. Use the dark theme."
+  },
+  {
+    "id": "eval-b1",
+    "set": "B",
+    "number": 1,
+    "title": "Add contact",
+    "request": "A phone \"Add contact\" form: first name, last name, phone number, email, a \"Favourite\" switch, and Save."
+  },
+  {
+    "id": "eval-b2",
+    "set": "B",
+    "number": 2,
+    "title": "Pricing page",
+    "request": "A desktop pricing page: a heading, a monthly / yearly switch, and three plan cards side by side (Free, Team, Business), each with a price, a short list of features and a button. The Team plan is the highlighted one."
+  },
+  {
+    "id": "eval-b3",
+    "set": "B",
+    "number": 3,
+    "title": "Users admin page",
+    "request": "A desktop admin \"Users\" page: a header with the page title and an \"Invite user\" button, a row of filters (search, role dropdown, status dropdown), a table of users with name, email, role, status and last seen, and a second version of the same page for when no users match the filters."
+  },
+  {
+    "id": "eval-b4",
+    "set": "B",
+    "number": 4,
+    "title": "Booking flow",
+    "request": "A tablet booking flow for a made-up dental clinic: choose a service, pick a date and time, enter your details. Buttons move forward and back between the three screens. The last screen's \"Confirm booking\" button opens a confirmation dialog, whose \"Done\" button returns to the first screen."
+  },
+  {
+    "id": "eval-b5",
+    "set": "B",
+    "number": 5,
+    "title": "File manager",
+    "request": "A desktop file manager for a made-up product. A left sidebar with locations, breadcrumbs for the current folder, a toolbar with Upload and \"New folder\" buttons and a search field, and a grid of file cards (a picture placeholder, a file name and a size). Selecting a file opens a details panel on the right with its properties and Download and Delete buttons. Delete opens a confirmation dialog. Also show the same page while it is loading, and when loading failed with a retry button. Add two notes explaining two of the elements. Use the blue monochrome theme."
+  }
+]

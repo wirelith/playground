@@ -13,6 +13,7 @@ import {
   collect,
   fetchUpstream,
   isCommit,
+  LOCAL_IN_VENDORED_FOLDERS,
   LOCK_PATH,
   readLock,
   sha256,
@@ -36,7 +37,12 @@ const here = execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--e
   .split('\0')
   .filter(Boolean);
 for (const path of here) {
-  if (VENDORED_FOLDERS.some((f) => path.startsWith(f)) && !(path in lock.files) && existsSync(path)) {
+  if (
+    VENDORED_FOLDERS.some((f) => path.startsWith(f)) &&
+    !(path in lock.files) &&
+    !LOCAL_IN_VENDORED_FOLDERS.includes(path) &&
+    existsSync(path)
+  ) {
     problems.push(`${path}: not from the main repository, in a folder that holds only its files`);
   }
 }

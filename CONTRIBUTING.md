@@ -90,6 +90,8 @@ Every source file starts with a `SPDX-License-Identifier: MIT` comment, and no o
 
 Some files here come byte for byte from [wirelith/wirelith](https://github.com/wirelith/wirelith): the built `@wirelith/core`, the examples and prompts under `vendor/wirelith/`, the fonts and icon license under `third-party/`, `scripts/hygiene/`, `scripts/check-spdx.mjs`, `scripts/check-licenses.mjs`, `scripts/install-hooks.mjs`, `.githooks/`, `.github/workflows/pr-checks.yml`, `.github/workflows/scan-posts.yml`, `biome.json`, `CODE_OF_CONDUCT.md` and `LICENSE`. `scripts/upstream.lock.json` lists every one with its SHA-256.
 
+The one file of this repository's own under `vendor/` is `vendor/biome.json`, which turns Biome off there: those files are checked in the main repository.
+
 **Never edit them here.** CI fails if any differs from the lock. To change one:
 
 1. Make the change in the main repository, through its own pull request and checks.

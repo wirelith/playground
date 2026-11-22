@@ -1,0 +1,20 @@
+wirelith 0.1
+
+screen "Inbox" desktop #inbox
+  sidebar
+    h3 "Postwren"
+    list
+      item "Inbox" icon=inbox badge="12" active
+      item "Sent" icon=send
+      item "Drafts" icon=file-text
+      item "Archive" icon=archive
+  header
+    input placeholder="Search mail" type=search grow
+    button "Compose" primary icon=pencil
+  table [Sender, Subject, Date]
+    row [Ada Park, Launch notes, Today] selected
+    row [Luis Ortega, Invoice for March, Yesterday]
+    row [Omar Haddad, "Lunch on Friday?", Mon]
+  row justify=end
+    button "Previous" disabled
+    button "Next"

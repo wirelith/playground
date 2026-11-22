@@ -1,0 +1,14 @@
+wirelith 0.1
+
+screen "Account settings" desktop #settings
+  header
+    h2 "Account settings"
+  tabs [Profile, Security, Notifications] active="Profile"
+    avatar "Mei Tanaka" lg
+    input "Name" value="Mei Tanaka"
+    input "Email" type=email value="mei@example.com"
+    textarea "Short bio" rows=3
+    select "Time zone" [UTC, Europe/Lisbon, Asia/Tokyo] value="Asia/Tokyo"
+    row justify=end
+      button "Cancel"
+      button "Save" primary

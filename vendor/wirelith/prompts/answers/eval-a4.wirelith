@@ -1,0 +1,26 @@
+wirelith 0.1
+
+screen "Cart" phone #cart
+  h1 "Your cart"
+  list
+    item "Canvas tote" badge="1"
+  button "Continue to shipping" primary -> #shipping
+
+screen "Shipping address" phone #shipping
+  h1 "Shipping address"
+  input "Street"
+  input "City"
+  input "Postcode"
+  button "Place order" primary -> #confirmed
+  button "Back to cart" -> #cart
+
+screen "Shipping address" #shipping-error of=#shipping state="Invalid postcode"
+  h1 "Shipping address"
+  input "Street" value="12 Harbour Lane"
+  input "City" value="Fernhill"
+  input "Postcode" value="ZZ9" error="Enter a valid postcode"
+  button "Place order" primary disabled
+
+screen "Order confirmed" phone #confirmed
+  empty "Your order is on its way"
+    button "Back to the shop" -> #cart
