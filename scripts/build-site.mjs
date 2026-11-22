@@ -44,9 +44,8 @@ function write(to, text) {
   writeFileSync(dest, text);
 }
 
-/** The commit being built: CI's, or the checkout's. */
+/** The commit being built: the checkout's. */
 function playgroundCommit() {
-  if (process.env.GITHUB_SHA) return process.env.GITHUB_SHA;
   return execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 }
 
