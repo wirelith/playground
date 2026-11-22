@@ -123,6 +123,81 @@ a {
   background: var(--panel);
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+fieldset.options {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.options,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.actions {
+  margin-left: auto;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+
+fieldset.menu-list {
+  border: 1px solid var(--line);
+}
+
+fieldset.menu-list legend {
+  padding: 0 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+fieldset.menu-list label {
+  display: flex;
+  gap: 6px;
+  padding: 4px 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.notice {
+  margin: 0;
+  padding: 8px 16px;
+  background: #eef3ff;
+  border-bottom: 1px solid #c9d6f5;
+  font-size: 14px;
+}
+
+.notice[hidden] {
+  display: none;
+}
+
+.notice[data-kind="error"] {
+  background: #fdeceb;
+  border-color: #f3c2bd;
+  color: var(--error);
+}
+
 .confirm {
   display: flex;
   flex-wrap: wrap;
