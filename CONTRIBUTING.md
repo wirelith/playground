@@ -71,6 +71,7 @@ node scripts/check-spdx.mjs  # every source file starts with its license line
 pnpm typecheck
 pnpm test
 pnpm build                   # the site, in _site/
+pnpm test:e2e                # the built site in Chromium, Firefox and WebKit (after pnpm build)
 pnpm preview                 # build, then serve _site/ locally
 pnpm run check-licenses      # every dependency has an allowed license
 pnpm run check-upstream      # every file taken from the main repository is unchanged
@@ -81,6 +82,7 @@ pnpm hygiene                 # the copyright-holder check, and the denylist if y
 
 - The site has no runtime dependencies, and must stay that way. The only code it runs is its own and the vendored `@wirelith/core`.
 - A dev dependency needs an exact version, a license that `scripts/check-licenses.mjs` allows, and a release at least 14 days old. pnpm enforces the age rule, and refuses any dependency that wants to run an install script.
+- The end-to-end tests use a headless browser library, as a dev dependency only. Install its browsers once with `pnpm exec playwright install chromium firefox webkit`. The tests paste through the clipboard, so don't copy anything while they run.
 
 ### Source files
 
