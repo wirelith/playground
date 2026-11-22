@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: MIT
 
 # Lint (formatting, code and the GitHub Actions lint), the source-file license headers,
-# typecheck, tests, the site build and its static scan, the conformance suite, the dependency
+# typecheck, unit tests, the site build and its static scan, the conformance suite, the
+# end-to-end tests in three browsers, the dependency
 # license check, the copyright-holder check over the whole tree, and the check that every file
 # taken from the main repository matches the pinned commit.
 
@@ -97,6 +98,23 @@ jobs:
       - run: npm install --global pnpm@${{ env.PNPM_VERSION }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm run conformance
+
+  # The built site in Chromium, Firefox and WebKit: hostile sources, pastes and links, every cap,
+  # every diagnostic case, and no request, cookie, violation, dialog or navigation throughout.
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: npm install --global pnpm@${{ env.PNPM_VERSION }}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium firefox webkit
+      - run: pnpm run build
+      - run: pnpm run test:e2e
 
   licenses:
     runs-on: ubuntu-latest

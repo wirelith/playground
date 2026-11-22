@@ -15,5 +15,12 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["scripts/**/*.mjs", "src/**/*.js", "src/**/*.d.ts", "test/**/*.mjs", "vitest.config.mjs"]
+  "include": [
+    "scripts/**/*.mjs",
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "test/**/*.mjs",
+    "vitest.config.mjs",
+    "vitest.e2e.config.mjs"
+  ]
 }
