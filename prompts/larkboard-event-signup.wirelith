@@ -1,0 +1,19 @@
+wirelith 0.1
+
+screen "Event" phone #event
+  h1 "Lanternfall Night Market"
+  text "Saturday 14 June, 18:00 · Wrenquay"
+  image "Stalls along the river at dusk" ratio=16:9
+  text "Street food, live music and makers from across the city." lines=2
+  radio "Ticket" [Standard, Supporter] value="Standard"
+  input "Quantity" type=number value="1"
+  button "Get tickets" primary -> #details
+
+screen "Your details" phone #details
+  breadcrumbs [Event, Your details]
+  input "Name" required
+  input "Email" type=email placeholder="you@example.com" required
+  button "Pay" primary -> #paid
+  modal "You're going" #paid
+    text "Your tickets are on their way to your inbox."
+    button "Done" primary -> #event

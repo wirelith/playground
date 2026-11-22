@@ -19,6 +19,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { filesUnder } from './lib/files.mjs';
+import { readPlaygroundPrompts } from './lib/prompts.mjs';
 import { readLock, sha256 } from './lib/upstream.mjs';
 
 const OUT = '_site';
@@ -79,6 +80,21 @@ const examples = index.map(({ id, title, file }) => ({
   title,
   source: readFileSync(join('vendor/wirelith/examples', file), 'utf8'),
 }));
+// The prompt library: the main repository's eval tasks with their reference answers, then the
+// playground's own prompts (prompts/<id>.md: a title line, then the request) with their
+// optional example answers (prompts/<id>.wirelith).
+/** @type {{ id: string, title: string, request: string }[]} */
+const evalTasks = JSON.parse(readFileSync('vendor/wirelith/prompts/eval-tasks.json', 'utf8'));
+const prompts = [
+  ...evalTasks.map(({ id, title, request }) => ({
+    id,
+    kind: 'eval',
+    title,
+    request,
+    answer: readFileSync(`vendor/wirelith/prompts/answers/${id}.wirelith`, 'utf8'),
+  })),
+  ...readPlaygroundPrompts(),
+];
 write(
   'src/site-data.js',
   [
@@ -88,6 +104,8 @@ write(
     `export const BUILD = ${JSON.stringify(build, null, 2)};`,
     '',
     `export const EXAMPLES = ${JSON.stringify(examples, null, 2)};`,
+    '',
+    `export const PROMPTS = ${JSON.stringify(prompts, null, 2)};`,
     '',
   ].join('\n'),
 );
